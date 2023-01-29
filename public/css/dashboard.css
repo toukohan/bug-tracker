@@ -1,5 +1,6 @@
 body {
   font-size: .875rem;
+  
 }
 
 .feather {
@@ -89,4 +90,39 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.issue {
+  width: 400px;
+  padding: 10px 20px;
+  margin: 10px;
+  border: 2px solid gainsboro;
+  border-radius: 5px;
+}
+
+.issue-title {
+  border-radius: 5px;
+  padding: 5px;
+}
+.severity0 {
+  background-color: lightyellow;
+}
+.severity1 {
+  background-color: peachpuff;
+}
+.severity2 {
+  background-color: lightsalmon;
+}
+.severity3 {
+  background-color: tomato;
+}
+
+.user {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid gainsboro;
+}
+
+.issue a {
+  color: black;
 }

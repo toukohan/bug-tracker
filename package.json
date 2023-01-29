@@ -1,6 +1,6 @@
 {
   "name": "bug-tracker",
-  "version": "1.0.0",
+  "version": "1.01",
   "description": "A simple issue tracking tool to manage attention and workload depending on user roles.",
   "main": "app.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "mongoose": "^6.9.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
   },
