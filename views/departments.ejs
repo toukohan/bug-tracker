@@ -69,12 +69,6 @@
                         <div class="btn-toolbar mb-2 mb-md-0">
 
 
-                            <form action="/dashboard/sort" method="post">
-                                <label for="sort">Sort issues by:</label>
-                                <button type="submit" value="new">new</button>
-                                <button type="submit" value="priority">priority</button>
-
-                            </form>
                         </div>
                     </div>
 
@@ -89,26 +83,7 @@
                             <% }) %>
                     </ul>
 
-                    <div class="issues">
-                        <% issues.forEach(issue=> { %>
-                            <div class="issue">
-                                <h3 class="issue-title severity<%= issue.severity %>">
-                                    <a href="/issues/<%= issue._id %>">
-                                        <%= issue.title %>
-                                    </a>
-                                </h3>
-                                <p class="issue-department">
-                                    <%= issue.department %> | Open: <%= issue.open %>
-                                </p>
-                                <p class="issue-date">
-                                    <%= issue.date.toString().substring(0, 21) %>
-                                </p>
-                                <p class="issue-content">
-                                    <%= issue.content %>
-                                </p>
-                            </div>
-                            <% }) %>
-                    </div>
+                    <%- include("./partials/view-issues") %>
 
 
                 </main>

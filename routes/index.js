@@ -35,6 +35,42 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
+router.get("/demo-login", (req, res) => {
+  res.render("demo-login");
+});
+
+// ignoring security issues here with this hack login
+
+router.post("/demo-login", (req, res, next) => {
+  const { role } = req.body;
+  if (role == "admin") {
+    req.body.email = "admin@admin";
+    req.body.password = "admin";
+  }
+  if (role == "manager") {
+    req.body.email = "manager@manager";
+    req.body.password = "manager";
+  }
+  if (role == "developer") {
+    req.body.email = "dev@dev";
+    req.body.password = "dev";
+  }
+  if (role == "regular") {
+    req.body.email = "regular@regular";
+    req.body.password = "regular";
+  }
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      res.render("login", { msg: info.message, msgtype: "warning" });
+    }
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      res.redirect("/dashboard");
+    });
+  })(req, res, next);
+});
+
 router.post("/register", (req, res) => {
   const { name, email, password } = req.body;
 
@@ -143,6 +179,20 @@ router.get("/users/:user", checkAuthenticated(), (req, res) => {
     });
 });
 
+router.post("/users/:userid/role", checkAuthenticated(), (req, res) => {
+  const { userid } = req.params;
+  const newRole = req.body.role;
+  User.findByIdAndUpdate(userid, { $set: { role: newRole } })
+    .then(() => {
+      console.log("role changed to:", newRole);
+      res.redirect("/users/" + userid);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.redirect("/users/" + userid);
+    });
+});
+
 // Department routes
 
 router.get("/departments", checkAuthenticated(), (req, res) => {
@@ -192,36 +242,42 @@ router.get("/departments/:department", checkAuthenticated(), (req, res) => {
 // Issues routes
 
 router.get("/issues", checkAuthenticated(), (req, res) => {
-  Issue.find({ open: true })
+  const { department: departments } = req.user;
+  Issue.find({ open: true, department: { $in: departments } })
     .sort({ date: -1 })
     .then((issues) => {
-      res.render("issues", { user: req.user, issues: issues, departments: [] });
+      res.render("issues", {
+        user: req.user,
+        issues: issues,
+        departments: departments,
+      });
     })
     .catch((err) => {
       console.error(err);
       res.redirect("/");
     });
-  // I had idea to arrange this by deparments but my execution didnt work
-  // const { department } = req.user;
-  // console.log(department);
-  // const issues = [];
-  // for (let dep of department) {
-  //   Issue.find({ open: true, department: dep })
-  //     .then((depIssues) => {
-  //       console.log(depIssues);
-  //       issues.push(depIssues);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       res.redirect("/dashboard");
-  //     });
-  // }
+});
 
-  // res.render("issues", {
-  //   user: req.user,
-  //   departments: department,
-  //   issues: issues,
-  // });
+router.post("/issues", checkAuthenticated(), (req, res) => {
+  const { sortby } = req.body;
+  const { department: departments } = req.user;
+  console.log(sortby, departments);
+  let query = "";
+  if (sortby == "new") query = { date: -1 };
+  if (sortby == "priority") query = { severity: -1 };
+  Issue.find({ open: true, department: { $in: departments } })
+    .sort(query)
+    .then((issues) => {
+      res.render("issues", {
+        user: req.user,
+        issues: issues,
+        departments: departments,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.redirect("/issues");
+    });
 });
 
 router.get("/issues/:issue", checkAuthenticated(), (req, res) => {

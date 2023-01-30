@@ -74,23 +74,43 @@
 
                     <div class="issues">
                         <div class="user">
-                            <p class="user-name">
-                                Name: <%= foundUser.name %>
-                            </p>
-                            <p class="user-email">
-                                Email: <%= foundUser.email %>
-                            </p>
-                            <p class="user-role">
-                                Role: <%= foundUser.role %>
-                            </p>
-                            <p>Departments</p>
-                            <ul class="user-departments">
-                                <% foundUser.department.forEach(department=> { %>
-                                    <li>
-                                        <%= department %>
-                                    </li>
-                                    <% }) %>
-                            </ul>
+                            <div class="user-props">
+                                <p class="user-name">
+                                    Name: <%= foundUser.name %>
+                                </p>
+                            </div>
+                            <div class="user-props">
+                                <p class="user-email">
+                                    Email: <%= foundUser.email %>
+                                </p>
+                            </div>
+                            <div class="user-props">
+                                <p class="user-role">
+                                    Role: <%= foundUser.role %>
+                                </p>
+                                <% if(user.role=="admin" ) { %>
+                                    <form action="/users/<%= foundUser._id %>/role" method="post">
+
+                                        <select name="role" id="role">
+                                            <option value="regular">Regular</option>
+                                            <option value="developer">Developer</option>
+                                            <option value="manager">Manager</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                        <button type="submit">Change role</button>
+                                    </form>
+                                    <% } %>
+                            </div>
+                            <div class="user-props">
+                                <p>Departments</p>
+                                <ul class="user-departments">
+                                    <% foundUser.department.forEach(department=> { %>
+                                        <li>
+                                            <%= department %>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                            </div>
                         </div>
 
                     </div>

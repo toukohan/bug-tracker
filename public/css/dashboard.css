@@ -126,3 +126,10 @@ body {
 .issue a {
   color: black;
 }
+
+.user-props {
+  margin-bottom: 5px;
+  padding: 5px;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+}

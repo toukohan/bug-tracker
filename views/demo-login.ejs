@@ -17,24 +17,26 @@
         <h1 class="h3 mb-3 fw-normal">Under construction...</h1>
         <p class=" mb-3 fw-normal">Choose user role</p>
 
+        <form action="/demo-login" method="post">
 
-        <a href="/demo/dashboard/admin"><button class="btn-roles w-100 btn btn-lg btn-dark"
-                type="submit">Admin</button></a>
+            <button class="btn-roles w-100 btn btn-lg btn-dark" type="submit" name="role" value="admin">Admin</button>
 
-        <a href="/demo/dashboard/manager"><button class="btn-roles w-100 btn btn-lg btn-danger"
-                type="submit">Manager</button></a>
+            <button class="btn-roles w-100 btn btn-lg btn-danger" type="submit" name="role"
+                value="manager">Manager</button>
 
-        <a href="/demo/dashboard/developer"><button class="btn-roles w-100 btn btn-lg btn-success"
-                type="submit">Developer</button></a>
+            <button class="btn-roles w-100 btn btn-lg btn-success" type="submit" name="role"
+                value="developer">Developer</button>
 
-        <a href="/demo/dashboard/regular"><button class="btn-roles w-100 btn btn-lg btn-primary"
-                type="submit">Regular</button></a>
+            <button class="btn-roles w-100 btn btn-lg btn-primary" type="submit" name="role"
+                value="regular">Regular</button>
 
+        </form>
         <p><a href="/register">Click here for normal sign in</a></p>
 
         <p class="mt-5 mb-3 text-muted">&copy; 2023 toukohan</p>
 
     </main>
+
 </body>
 
 </html>

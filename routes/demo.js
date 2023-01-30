@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/login", (req, res) => {
+router.get("/demo-login", (req, res) => {
   res.render("demo-login");
 });
 
