@@ -12,6 +12,7 @@ const User = new Schema({
   email_verified: Boolean,
   role: String,
   department: [String],
+  teams: [String],
 });
 
 module.exports = mongoose.model("User", User);

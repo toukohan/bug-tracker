@@ -1,13 +1,13 @@
 <div class="issues">
     <% issues.forEach(issue=> { %>
-        <div class="issue">
+        <div class="issue issue-open-<%= issue.open %>">
             <h3 class="issue-title severity<%= issue.severity %>">
                 <a href="/issues/<%= issue._id %>">
                     <%= issue.title %>
                 </a>
             </h3>
             <p class="issue-department">
-                <%= issue.department %> | Open: <%= issue.open %>
+                <%= issue.department %> | Open: <%= issue.open %> | Assigned to: <%= issue.assigned %>
             </p>
             <p class="issue-date">
                 <%= issue.date.toString().substring(0, 21) %>

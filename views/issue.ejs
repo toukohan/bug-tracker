@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                    <div class="position-sticky pt-3 sidebar-sticky">
+                    <div class="position-sticky pt-3 sidebar-sticky sidebar-custom">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/dashboard">
@@ -36,28 +36,34 @@
                                     <a class="nav-link" href="/users">
                                         Users
                                     </a>
+
                                 </li>
                                 <% } %>
-                                    <% if(user.role=="admin" || user.role=="manager" ) { %>
+                                    <% if(user.role=="admin" || user.role=="manager" || user.role=="developer" ) { %>
                                         <li class="nav-item">
                                             <a class="nav-link" href="/departments">
                                                 Departments
                                             </a>
                                         </li>
                                         <% } %>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="/issues">
-                                                    Issues
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/create">
-                                                    Create an Issue
-                                                </a>
-                                            </li>
+                                            <% if(user.role=="admin" || user.role=="manager" || user.role=="developer" )
+                                                { %>
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="/issues">
+                                                        Issues
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/create">
+                                                            Create an Issue
+                                                        </a>
+                                                    </li>
                         </ul>
 
-
+                        <div class="logged-in">
+                            Logged in as <%= user.name %>
+                        </div>
                     </div>
                 </nav>
 
@@ -65,8 +71,7 @@
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Issue</h1>
-                        <h5>logged in as <%= user.name %>
-                        </h5>
+
                         <div class="btn-toolbar mb-2 mb-md-0">
                         </div>
                     </div>
@@ -77,16 +82,17 @@
                                 <%= issue.title %>
                             </h3>
                             <p class="issue-department">
-                                <%= issue.department %> | Open: <%= issue.open %>
-                                        <% if(user.role=="admin" || user.role=="manager" ) { %>
-                                            <form action="/issues/close/<%= issue._id %>" method="post">
-                                                <% if (issue.open) { %>
-                                                    <button type="submit" value="close">Close</button>
-                                                    <% } else { %>
-                                                        <button type="submit" value="open">Open</button>
-                                                        <% } %>
-                                            </form>
-                                            <% } %>
+                                <%= issue.department %> | Open: <%= issue.open %> | Assigned to: <%= issue.assigned %>
+                                            <% if(user.role=="admin" || user.role=="manager" ) { %>
+                                                <form action="/issues/<%= issue._id %>/handle" method="post">
+                                                    <% if (issue.open) { %>
+                                                        <button type="submit" name="handle" value="close">Close</button>
+                                                        <% } else { %>
+                                                            <button type="submit" name="handle"
+                                                                value="open">Open</button>
+                                                            <% } %>
+                                                </form>
+                                                <% } %>
                             </p>
 
                             <p class="issue-date">
@@ -96,7 +102,7 @@
                                 <%= issue.content %>
                             </p>
                             <% if(user.role=="admin" || user.role=="manager" ) { %>
-                                <form action="/issues/assign/<%= issue._id %>" method="post">
+                                <form action="/issues/<%= issue._id %>/assign" method="post">
                                     <label for="assign">Assign as task</label>
                                     <input type="text" id="assign" name="assign">
                                     <button type="submit">Assign</button>

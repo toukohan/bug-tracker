@@ -23,40 +23,45 @@
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                    <div class="position-sticky pt-3 sidebar-sticky">
+                    <div class="position-sticky pt-3 sidebar-sticky sidebar-custom">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">
+                                <a class="nav-link" aria-current="page" href="/dashboard">
                                     Dashboard
                                 </a>
                             </li>
                             <% if(user.role=="admin" ) { %>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link active" href="/users">
                                         Users
                                     </a>
                                 </li>
                                 <% } %>
-                                    <% if(user.role=="admin" || user.role=="manager" ) { %>
+                                    <% if(user.role=="admin" || user.role=="manager" || user.role=="developer" ) { %>
                                         <li class="nav-item">
                                             <a class="nav-link" href="/departments">
                                                 Departments
                                             </a>
                                         </li>
                                         <% } %>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/issues">
-                                                    Issues
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/create">
-                                                    Create an Issue
-                                                </a>
-                                            </li>
+                                            <% if(user.role=="admin" || user.role=="manager" || user.role=="developer" )
+                                                { %>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/issues">
+                                                        Issues
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/create">
+                                                            Create an Issue
+                                                        </a>
+                                                    </li>
                         </ul>
 
-
+                        <div class="logged-in">
+                            Logged in as <%= user.name %>
+                        </div>
                     </div>
                 </nav>
 
@@ -64,8 +69,7 @@
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Users</h1>
-                        <h5>logged in as <%= user.name %>
-                        </h5>
+
                         <div class="btn-toolbar mb-2 mb-md-0">
                         </div>
                     </div>

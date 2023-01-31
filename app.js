@@ -31,7 +31,12 @@ require("./config/passport");
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Routing
+
 app.use("/", require("./routes/index"));
+app.use("/dashboard", require("./routes/dashboard"));
+app.use("/issues", require("./routes/issues"));
+app.use("/users", require("./routes/users"));
 
 app.use("/demo", require("./routes/demo"));
 

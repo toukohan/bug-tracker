@@ -4,14 +4,14 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const Issue = require("../models/Issue");
-const { getAge } = require("../middleware/issues");
+
 const { checkAuthenticated } = require("../middleware/auth");
 const pjson = require("../package.json");
 
 // Sign in routes
 
 router.get("/", (req, res) => {
-  res.render("login", { msg: "", msgtype: "" });
+  res.render("demo-login", { msg: "", msgtype: "" });
 });
 
 router.get("/login", (req, res) => {
@@ -113,84 +113,8 @@ router.post("/register", (req, res) => {
 router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) console.error(err);
-    res.redirect("/login");
+    res.redirect("/");
   });
-});
-
-// Dashboard routes
-
-router.get("/dashboard", checkAuthenticated(), (req, res) => {
-  const { _id } = req.user;
-  console.log(_id);
-  Issue.find({ creator: _id })
-    .then((issues) => {
-      res.render("dashboard", { user: req.user, issues: issues });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/");
-    });
-});
-
-// my sorting route doesnt work
-
-router.post("/dashboard/sort", checkAuthenticated(), (req, res) => {
-  console.log(req.body.sort);
-  const { sort } = req.body;
-  let sortBy = {};
-  if (sort == "new") sortBy.date = -1;
-  if (sort == "priority") sortBy.severity = -1;
-  if (sort == "unassigned") sortBy.assigned = -1;
-  Issue.find({ open: true })
-    .sort(sortBy)
-    .then((issues) => {
-      res.render("dashboard", { user: req.user, issues: issues });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/dashboard");
-    });
-});
-
-// Users routes
-
-router.get("/users", checkAuthenticated(), (req, res) => {
-  User.find({})
-    .then((users) => {
-      res.render("users", { user: req.user, users: users });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/dashboard");
-    });
-});
-
-router.get("/users/:user", checkAuthenticated(), (req, res) => {
-  const userId = req.params.user;
-  console.log(userId);
-  User.findById(userId)
-    .then((foundUser) => {
-      console.log(foundUser);
-      res.render("user", { user: req.user, foundUser: foundUser });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/dashboard");
-    });
-});
-
-router.post("/users/:userid/role", checkAuthenticated(), (req, res) => {
-  const { userid } = req.params;
-  const newRole = req.body.role;
-  User.findByIdAndUpdate(userid, { $set: { role: newRole } })
-    .then(() => {
-      console.log("role changed to:", newRole);
-      res.redirect("/users/" + userid);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/users/" + userid);
-    });
 });
 
 // Department routes
@@ -262,11 +186,16 @@ router.post("/issues", checkAuthenticated(), (req, res) => {
   const { sortby } = req.body;
   const { department: departments } = req.user;
   console.log(sortby, departments);
-  let query = "";
-  if (sortby == "new") query = { date: -1 };
-  if (sortby == "priority") query = { severity: -1 };
-  Issue.find({ open: true, department: { $in: departments } })
-    .sort(query)
+  let sort;
+  let query = { open: true, department: { $in: departments } };
+  if (sortby == "new") sort = { date: -1 };
+  if (sortby == "priority") sort = { severity: -1 };
+  if (sortby == "closed") {
+    sort = { open: -1, date: -1 };
+    query = { open: false, department: { $in: departments } };
+  }
+  Issue.find(query)
+    .sort(sort)
     .then((issues) => {
       res.render("issues", {
         user: req.user,
@@ -292,6 +221,35 @@ router.get("/issues/:issue", checkAuthenticated(), (req, res) => {
       console.error(err);
       res.redirect("/issues");
     });
+});
+
+router.post("/issues/:issue/handle", checkAuthenticated(), (req, res) => {
+  const { issue: issueId } = req.params;
+  const { handle } = req.body;
+  console.log(req.params);
+  console.log(handle, issueId);
+  if (handle === "close") {
+    Issue.findByIdAndUpdate(issueId, { $set: { open: false } })
+      .then(() => {
+        console.log("issue closed");
+        res.redirect("/issues/" + issueId);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.redirect("/issues/" + issueId);
+      });
+  }
+  if (handle === "open") {
+    Issue.findByIdAndUpdate(issueId, { $set: { open: true } })
+      .then(() => {
+        console.log("issue opened");
+        res.redirect("/issues/" + issueId);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.redirect("/issues/" + issueId);
+      });
+  }
 });
 
 // create a new issue

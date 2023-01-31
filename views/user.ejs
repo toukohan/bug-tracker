@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                    <div class="position-sticky pt-3 sidebar-sticky">
+                    <div class="position-sticky pt-3 sidebar-sticky sidebar-custom">
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/dashboard">
@@ -34,31 +34,43 @@
                             </li>
                             <% if(user.role=="admin" ) { %>
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="/users">
+                                    <a class="nav-link " href="/users">
                                         Users
                                     </a>
+                                <li class="nav-item">
+                                    <a class="nav-link active found-user" href="/users/<%= foundUser._id %>">
+                                        User: <%= foundUser.name %>
+                                    </a>
+
                                 </li>
+                                </li>
+
                                 <% } %>
-                                    <% if(user.role=="admin" || user.role=="manager" ) { %>
+                                    <% if(user.role=="admin" || user.role=="manager" || user.role=="developer" ) { %>
                                         <li class="nav-item">
                                             <a class="nav-link" href="/departments">
                                                 Departments
                                             </a>
                                         </li>
                                         <% } %>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/issues">
-                                                    Issues
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/create">
-                                                    Create an Issue
-                                                </a>
-                                            </li>
+                                            <% if(user.role=="admin" || user.role=="manager" || user.role=="developer" )
+                                                { %>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/issues">
+                                                        Issues
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/create">
+                                                            Create an Issue
+                                                        </a>
+                                                    </li>
                         </ul>
 
-
+                        <div class="logged-in">
+                            Logged in as <%= user.name %>
+                        </div>
                     </div>
                 </nav>
 
@@ -66,8 +78,7 @@
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Dashboard</h1>
-                        <h5>logged in as <%= user.name %>
-                        </h5>
+
                         <div class="btn-toolbar mb-2 mb-md-0">
                         </div>
                     </div>
@@ -103,13 +114,44 @@
                             </div>
                             <div class="user-props">
                                 <p>Departments</p>
-                                <ul class="user-departments">
-                                    <% foundUser.department.forEach(department=> { %>
-                                        <li>
-                                            <%= department %>
-                                        </li>
-                                        <% }) %>
-                                </ul>
+                                <form action="/users/<%= foundUser._id %>/remove-department" method="post">
+                                    <ul class="user-departments">
+                                        <% foundUser.department.forEach(department=> { %>
+                                            <li>
+                                                <%= department %>
+                                                    <% if (user.role==="admin" ) { %>
+                                                        <button type="submit" name="department"
+                                                            value="<%= department%>">x</button>
+                                                        <% } %>
+                                            </li>
+                                            <% }) %>
+                                    </ul>
+                                </form>
+
+                                <% if(user.role==="admin" || user.role==="manager" ){ %>
+                                    <form action="/users/<%= foundUser._id %>/add-department" method="post">
+                                        <select name="department" id="department">
+                                            <% departments.forEach(dep=> { %>
+                                                <option value="<%= dep %>">
+                                                    <%= dep %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                        <button type="submit">Add department</button>
+                                    </form>
+                                    <% } %>
+                                        <% if(user.role==="admin" || user.role==="manager" ) { %>
+                                            <form action="/users/<%= foundUser._id %>/add-team" method="post">
+                                                <select name="team" id="team">
+                                                    <% user.teams.forEach(team=> { %>
+                                                        <option value="<%= team %>">
+                                                            <%= team %>
+                                                        </option>
+                                                        <% }) %>
+                                                </select>
+                                                <button type="submit">Add to team</button>
+                                            </form>
+                                            <% } %>
                             </div>
                         </div>
 
