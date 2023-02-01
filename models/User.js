@@ -9,10 +9,14 @@ const User = new Schema({
     unique: true,
   },
   password: String,
-  email_verified: Boolean,
+  email_verified: {
+    type: Boolean,
+    default: false,
+  },
   role: String,
   department: [String],
   teams: [String],
+  team: [String],
 });
 
 module.exports = mongoose.model("User", User);

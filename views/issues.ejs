@@ -74,7 +74,18 @@
                         <div class="btn-toolbar mb-2 mb-md-0">
 
 
-                            <%- include("./partials/sort-form") %>
+                            <form action="/issues" method="post">
+                                <label for="sort">Sort issues by:</label>
+                                <button class="btn btn-dark btn-sm" name="sortby" type="submit" value="new">new</button>
+                                <button class="btn btn-dark btn-sm" name="sortby" type="submit"
+                                    value="priority">priority</button>
+                                <button class="btn btn-dark btn-sm" name="sortby" type="submit"
+                                    value="unassigned">unassigned</button>
+                                <button class="btn btn-dark btn-sm" name="sortby" type="submit"
+                                    value="closed">closed</button>
+
+
+                            </form>
                         </div>
                     </div>
 

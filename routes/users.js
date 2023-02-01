@@ -47,6 +47,27 @@ router.get("/:user", checkAuthenticated(), async (req, res) => {
     });
 });
 
+router.post("/create", checkAuthenticated(), async (req, res) => {
+  const { name, email, password, role, teams, department } = req.body;
+  try {
+    const hash = await bcrypt.hash(password, 8);
+    const newUser = new User({
+      name,
+      email,
+      password: hash,
+      role,
+      teams: [teams],
+      department: [department],
+      team: [email],
+    });
+    await newUser.save().then(() => console.log("user saved."));
+    res.redirect("/users");
+  } catch (err) {
+    console.error(err);
+    res.redirect("/users");
+  }
+});
+
 router.post("/:userid/role", checkAuthenticated(), (req, res) => {
   const { userid } = req.params;
   const newRole = req.body.role;

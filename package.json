@@ -1,6 +1,6 @@
 {
   "name": "bug-tracker",
-  "version": "1.03",
+  "version": "1.04",
   "description": "A simple issue tracking tool to manage attention and workload depending on user roles.",
   "main": "app.js",
   "scripts": {
@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^4.6.0",
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-session": "^1.17.3",

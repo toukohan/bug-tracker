@@ -4,7 +4,23 @@ A simple issue tracking tool to manage attention and workload depending on user 
 
 # Current version
 
-## (1.03)
+## (1.04)
+
+Added dotenv. Changed to Atlas database.
+
+Testing different priority visuals.
+
+Added new styling to "create".
+
+Added checkNotAuthenticated to redirect back to dashboard if the session is alive.
+
+Made an assigning feature on dashboard.
+
+Added bootstrap styling to some of the default buttons and inputs.
+
+Create User feature.
+
+(1.03)
 
 Added ability to add and remove departments for users.
 

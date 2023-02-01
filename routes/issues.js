@@ -41,6 +41,9 @@ router.post("/", checkAuthenticated(), (req, res) => {
     sort = { open: -1, date: -1 };
     query = { open: false, department: { $in: departments } };
   }
+  if (sortby == "unassigned") {
+    sort = { assigned: 1 };
+  }
   Issue.find(query)
     .sort(sort)
     .then((issues) => {
@@ -113,4 +116,20 @@ router.post("/:issue/handle", checkAuthenticated(), (req, res) => {
   }
 });
 
+router.post("/:issue/response", checkAuthenticated(), (req, res) => {
+  const { issue: issueId } = req.params;
+  const { content } = req.body;
+  const { name: responder } = req.user;
+  const date = new Date();
+  const newResponse = { date, responder, content };
+  Issue.findByIdAndUpdate(issueId, { $push: { responses: newResponse } })
+    .then(() => {
+      console.log("New respond added");
+      res.redirect("/issues/" + issueId);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.redirect("/issues/" + issueId);
+    });
+});
 module.exports = router;

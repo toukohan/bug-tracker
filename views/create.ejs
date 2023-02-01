@@ -81,32 +81,38 @@
                     <div class="issue-form">
 
                         <form action="/create" method="post">
-                            <label for="title">Issue name:</label>
+                            <label for="title">Title:</label>
                             <br>
-                            <input type="text" name="title" id="title">
-                            <br>
-                            <label for="department">Choose department:</label>
-                            <br>
-                            <select type="text" name="department" id="department">
-                                <option value="Development">Development</option>
-                                <option value="Support">Support</option>
-                                <option value="Engineering">Engineering</option>
-                                <option value="Sales">Sales</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="undefined">Other</option>
-                            </select>
-                            <select name="severity" id="severity">
-                                <option value="0">Non-issue</option>
-                                <option value="1">Low</option>
-                                <option value="2">Medium</option>
-                                <option value="3">Critical</option>
-                            </select>
-                            <br>
+                            <input class="form-control" type="text" name="title" id="title">
+
+
+                            <div class="select-menus d-flex">
+
+                                <select class="form-select" type="text" name="department" id="department">
+                                    <option selected>Choose department</option>
+                                    <% user.department.forEach(dep=> { %>
+                                        <option value="<%= dep %>">
+                                            <%= dep %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                                <% if (user.role !="regular" ) { %>
+                                    <select class="form-select" name="severity" id="severity">
+                                        <option selected>Priority</option>
+                                        <option value="0">Non-issue</option>
+                                        <option value="1">Low</option>
+                                        <option value="2">Medium</option>
+                                        <option value="3">Critical</option>
+                                    </select>
+                                    <% } %>
+                            </div>
+
                             <label for="content">Describe the issue:</label>
                             <br>
-                            <textarea type="text" name="content" id="content" cols="80" rows="8"></textarea>
+                            <textarea class="form-control" type="text" name="content" id="content" cols="60"
+                                rows="5"></textarea>
                             <br>
-                            <button type="submit">Create</button>
+                            <button class="btn btn-lg btn-dark" type="submit">Create</button>
 
                         </form>
 

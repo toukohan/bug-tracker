@@ -10,8 +10,21 @@ const Issue = new Schema({
   version: Number,
   open: Boolean,
   assigned: String,
-  severity: Number,
-  department: String,
+  severity: {
+    type: Number,
+    default: 1,
+  },
+  department: {
+    type: String,
+    default: "Support",
+  },
+  responses: [
+    {
+      date: Date,
+      responder: String,
+      content: String,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Issue", Issue);

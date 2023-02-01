@@ -53,10 +53,14 @@
                                                 </li>
                                                 <% } %>
                                                     <li class="nav-item">
+                                                        <a href="/team" class="nav-link active">Team</a>
+                                                    </li>
+                                                    <li class="nav-item">
                                                         <a class="nav-link" href="/create">
                                                             Create an Issue
                                                         </a>
                                                     </li>
+
                         </ul>
 
                         <div class="logged-in">
@@ -68,74 +72,46 @@
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Users</h1>
+                        <h1 class="h2">Team</h1>
 
                         <div class="btn-toolbar mb-2 mb-md-0">
                         </div>
                     </div>
+
                     <div class="d-flex">
 
 
                         <div class="issues">
-                            <% users.forEach(user=> { %>
+                            <% user.team.forEach(member=> { %>
                                 <div class="issue">
                                     <p class="user-name">
                                         Name: <a href="/users/<%= user._id %>">
-                                            <%= user.name %>
-                                        </a> | Role: <%= user.role %>
+                                            <%= member.name %>
+                                        </a>
                                     </p>
                                     <p class="user-email">
-                                        Email: <%= user.email %>
+                                        Email: <%= member.email %>
                                     </p>
-
-                                    <p class="user-department">Departments:
-                                        <% user.department.forEach(department=> { %>
-                                            <%= department %>
-                                                <% }) %>
+                                    <p class="user-role">
+                                        Role: <%= member.role %>
                                     </p>
+                                    <p>Departments:</p>
+                                    <ul class="user-department">
+                                        <% member.department.forEach(department=> { %>
+                                            <li>
+                                                <%= department %>
+                                            </li>
+                                            <% }) %>
+                                    </ul>
                                 </div>
                                 <% }) %>
                         </div>
-                        <% if (user.role=="admin" ) { %>
-                            <div class="create-user w-400">
-                                <h2>Create User</h2>
-
-                                <form action="/users/create" method="post">
-                                    <div class="center-form">
-                                        <label for="name">Name:</label>
-                                        <input class="form-control w-300" type="text" name="name" id="name">
-                                        <label for="email">Email:</label>
-                                        <input class="form-control w-300" type="email" name="email" id="email">
-                                        <label for="password">Password:</label>
-                                        <input class="form-control w-300" type="password" name="password" id="password">
-                                        <label for="role">Role:</label>
-                                        <select class="form-select w-300" name="role" id="role">
-                                            <option value="regular">regular</option>
-                                            <option value="developer">developer</option>
-                                            <option value="manager">manager</option>
-                                            <option value="admin">admin</option>
-                                        </select>
-                                        <label for="teams">Team</label>
-                                        <select class="form-select w-300" name="teams" id="teams">
-                                            <% user.teams.forEach(team=> { %>
-                                                <option value="<%= team %>">
-                                                    <%= team %>
-                                                </option>
-                                                <% }) %>
-                                        </select>
-                                        <label for="department">Department</label>
-                                        <select class="form-select w-300 mb-3" name="department" id="department">
-                                            <% user.department.forEach(dep=> { %>
-                                                <option value="<%= dep %>">
-                                                    <%= dep %>
-                                                </option>
-                                                <% }) %>
-                                        </select>
-                                        <button class="btn btn-dark" type="submit">Create User</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <% } %>
+                        <div class="new-member">
+                            <form action="/team/add-member" method="post">
+                                <input type="email" name="email" id="email">
+                                <button type="submit">Add member</button>
+                            </form>
+                        </div>
                     </div>
 
                 </main>

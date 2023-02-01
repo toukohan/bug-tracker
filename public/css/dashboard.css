@@ -115,24 +115,24 @@ body {
   opacity: 0.5;
 }
 
-/* colors for the issue title based on severity/priority */
+/* colors for the issue based on severity/priority */
 
 .severity0 {
-  background-color: #fff;
+  border: 2px solid #fff;
 }
 .severity1 {
-  background-color: lightgoldenrodyellow;
+  border: 2px solid lightgoldenrodyellow;
 }
 .severity2 {
-  background-color: peachpuff;
+  border: 2px solid peachpuff;
 }
 .severity3 {
-  background-color: lightsalmon;
+  border: 2px solid lightsalmon;
 }
 
 .user {
   padding: 10px;
-  width: 300px;
+  width: 400px;
   border: 1px solid gainsboro;
 }
 
@@ -147,6 +147,9 @@ body {
   border-radius: 5px;
 }
 
+/* testing the  flex column option instead
+
+
 .sidebar-custom {
   position: relative;
 }
@@ -155,8 +158,52 @@ body {
   position: absolute;
   bottom: 0;
 }
+*/
+
+.sidebar-custom {
+  display: flex;
+  flex-direction: column;
+}
+
+.logged-in {
+  margin-top: auto;
+  margin-left: 15px;
+  margin-bottom: 20px;
+}
 
 .found-user {
   padding-left: 20px;
   font-size: .8rem;
+}
+
+.form-select {
+  width: 200px;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 600px;
+  margin-bottom: 5px;
+}
+
+.m-left-10 {
+  margin-left: 10px;
+}
+
+.m-left-30 {
+  margin-left: 30px;
+}
+.w-300 {
+  width: 300px;
+}
+.w-400 {
+  width: 400px;
+}
+.create-user {
+  border: 2px solid gainsboro;
+  border-radius: 5px;
+  margin-left: 30px;
+  margin-top: 10px;
+  padding: 30px 45px;
+  
 }

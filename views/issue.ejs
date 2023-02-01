@@ -70,46 +70,79 @@
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Issue</h1>
+                        <h1 class="m-left-30">Issue</h1>
 
                         <div class="btn-toolbar mb-2 mb-md-0">
                         </div>
                     </div>
 
-                    <div class="issues">
-                        <div class="issue">
-                            <h3 class="issue-title severity<%= issue.severity %>">
-                                <%= issue.title %>
-                            </h3>
-                            <p class="issue-department">
-                                <%= issue.department %> | Open: <%= issue.open %> | Assigned to: <%= issue.assigned %>
-                                            <% if(user.role=="admin" || user.role=="manager" ) { %>
-                                                <form action="/issues/<%= issue._id %>/handle" method="post">
-                                                    <% if (issue.open) { %>
-                                                        <button type="submit" name="handle" value="close">Close</button>
-                                                        <% } else { %>
-                                                            <button type="submit" name="handle"
-                                                                value="open">Open</button>
+                    <div class="d-flex">
+                        <div class="issues">
+                            <div class="issue severity<%= issue.severity %>">
+                                <h3 class="issue-title ">
+                                    <%= issue.title %>
+                                </h3>
+                                <p class="issue-department">
+                                    <%= issue.department %> | <% if(issue.open) { %> Open <% } else { %> Closed <% } %>
+                                                    |
+                                                    Assigned to: <%= issue.assigned %>
+                                                        <% if(user.role=="admin" || user.role=="manager" ) { %>
+                                                            <form action="/issues/<%= issue._id %>/handle"
+                                                                method="post">
+                                                                <% if (issue.open) { %>
+                                                                    <button class="btn btn-sm btn-dark" type="submit"
+                                                                        name="handle" value="close">Close</button>
+                                                                    <% } else { %>
+                                                                        <button class="btn btn-sm btn-dark"
+                                                                            type="submit" name="handle"
+                                                                            value="open">Open</button>
+                                                                        <% } %>
+                                                            </form>
                                                             <% } %>
-                                                </form>
-                                                <% } %>
-                            </p>
+                                </p>
 
-                            <p class="issue-date">
-                                <%= issue.date.toString().substring(0, 21) %>
-                            </p>
-                            <p class="issue-content">
-                                <%= issue.content %>
-                            </p>
-                            <% if(user.role=="admin" || user.role=="manager" ) { %>
-                                <form action="/issues/<%= issue._id %>/assign" method="post">
-                                    <label for="assign">Assign as task</label>
-                                    <input type="text" id="assign" name="assign">
-                                    <button type="submit">Assign</button>
-                                </form>
-                                <% } %>
+                                <p class="issue-date">
+                                    <%= issue.date.toString().substring(0, 21) %>
+                                </p>
+                                <p class="issue-content">
+                                    <%= issue.content %>
+                                </p>
+                                <% if(user.role=="admin" || user.role=="manager" ) { %>
+                                    <form action="/issues/<%= issue._id %>/assign" method="post">
+                                        <label for="assign">Assign as task</label>
+                                        <input type="text" id="assign" name="assign">
+                                        <button class="btn btn-sm btn-dark" type="submit">Assign</button>
+                                    </form>
+                                    <% } %>
+                            </div>
+                            <% if (issue.responses.length) { %>
+                                <h3 class="m-left-30">Responses</h3>
+                                <% issue.responses.forEach(response=> { %>
+                                    <div class="issue">
+                                        <p>
+                                            From: <%= response.responder %>
+                                        </p>
+                                        <p>
+                                            <%= response.date.toString().substring(0, 21) %>
+                                        </p>
+                                        <p>
+                                            <%= response.content %>
+                                        </p>
+
+                                    </div>
+
+                                    <% }) } %>
+
                         </div>
 
+                        <div class="m-left-30">
+                            <h2>Create a response</h2>
+                            <form action="/issues/<%=issue._id %>/response" method="post">
+                                <textarea class="form-control w-400" name="content" id="response" cols="20"
+                                    rows="5"></textarea>
+                                <button class="btn btn-dark" type="submit">Respond</button>
+                            </form>
+                        </div>
                     </div>
 
 

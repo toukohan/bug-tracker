@@ -62,4 +62,18 @@ router.post("/", checkAuthenticated(), async (req, res) => {
     });
 });
 
+router.post("/:issueid/assign", checkAuthenticated(), (req, res) => {
+  const { issueid } = req.params;
+  const { assign } = req.body;
+  Issue.findByIdAndUpdate(issueid, { $set: { assigned: assign } })
+    .then(() => {
+      console.log("Issue assigned to", assign);
+      res.redirect("/dashboard");
+    })
+    .catch((err) => {
+      console.error(err);
+      res.redirect("/dashboard");
+    });
+});
+
 module.exports = router;

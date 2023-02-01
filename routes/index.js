@@ -5,20 +5,23 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const Issue = require("../models/Issue");
 
-const { checkAuthenticated } = require("../middleware/auth");
+const {
+  checkAuthenticated,
+  checkNotAuthenticated,
+} = require("../middleware/auth");
 const pjson = require("../package.json");
 
 // Sign in routes
 
-router.get("/", (req, res) => {
+router.get("/", checkNotAuthenticated(), (req, res) => {
   res.render("demo-login", { msg: "", msgtype: "" });
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", checkNotAuthenticated(), (req, res) => {
   res.render("login", { msg: "", msgtype: "" });
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", checkNotAuthenticated(), (req, res) => {
   res.render("register", { msg: "", msgtype: "" });
 });
 
@@ -35,7 +38,7 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/demo-login", (req, res) => {
+router.get("/demo-login", checkNotAuthenticated(), (req, res) => {
   res.render("demo-login");
 });
 
@@ -163,95 +166,6 @@ router.get("/departments/:department", checkAuthenticated(), (req, res) => {
     });
 });
 
-// Issues routes
-
-router.get("/issues", checkAuthenticated(), (req, res) => {
-  const { department: departments } = req.user;
-  Issue.find({ open: true, department: { $in: departments } })
-    .sort({ date: -1 })
-    .then((issues) => {
-      res.render("issues", {
-        user: req.user,
-        issues: issues,
-        departments: departments,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/");
-    });
-});
-
-router.post("/issues", checkAuthenticated(), (req, res) => {
-  const { sortby } = req.body;
-  const { department: departments } = req.user;
-  console.log(sortby, departments);
-  let sort;
-  let query = { open: true, department: { $in: departments } };
-  if (sortby == "new") sort = { date: -1 };
-  if (sortby == "priority") sort = { severity: -1 };
-  if (sortby == "closed") {
-    sort = { open: -1, date: -1 };
-    query = { open: false, department: { $in: departments } };
-  }
-  Issue.find(query)
-    .sort(sort)
-    .then((issues) => {
-      res.render("issues", {
-        user: req.user,
-        issues: issues,
-        departments: departments,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/issues");
-    });
-});
-
-router.get("/issues/:issue", checkAuthenticated(), (req, res) => {
-  const issueId = req.params.issue;
-  console.log(req.params);
-  Issue.findById(issueId)
-    .then((issue) => {
-      console.log(issue);
-      res.render("issue", { user: req.user, issue: issue });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/issues");
-    });
-});
-
-router.post("/issues/:issue/handle", checkAuthenticated(), (req, res) => {
-  const { issue: issueId } = req.params;
-  const { handle } = req.body;
-  console.log(req.params);
-  console.log(handle, issueId);
-  if (handle === "close") {
-    Issue.findByIdAndUpdate(issueId, { $set: { open: false } })
-      .then(() => {
-        console.log("issue closed");
-        res.redirect("/issues/" + issueId);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.redirect("/issues/" + issueId);
-      });
-  }
-  if (handle === "open") {
-    Issue.findByIdAndUpdate(issueId, { $set: { open: true } })
-      .then(() => {
-        console.log("issue opened");
-        res.redirect("/issues/" + issueId);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.redirect("/issues/" + issueId);
-      });
-  }
-});
-
 // create a new issue
 
 router.get("/create", checkAuthenticated(), (req, res) => {
@@ -279,6 +193,11 @@ router.post("/create", checkAuthenticated(), (req, res) => {
     }
     res.redirect("/dashboard");
   });
+});
+
+router.get("/team", checkAuthenticated(), (req, res) => {
+  console.log(req.user.team);
+  res.redirect("/dashboard");
 });
 
 module.exports = router;

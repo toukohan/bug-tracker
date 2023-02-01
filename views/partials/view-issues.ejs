@@ -1,20 +1,33 @@
-<div class="issues">
-    <% issues.forEach(issue=> { %>
-        <div class="issue issue-open-<%= issue.open %>">
-            <h3 class="issue-title severity<%= issue.severity %>">
-                <a href="/issues/<%= issue._id %>">
-                    <%= issue.title %>
-                </a>
-            </h3>
-            <p class="issue-department">
-                <%= issue.department %> | Open: <%= issue.open %> | Assigned to: <%= issue.assigned %>
-            </p>
-            <p class="issue-date">
-                <%= issue.date.toString().substring(0, 21) %>
-            </p>
-            <p class="issue-content">
-                <%= issue.content %>
-            </p>
-        </div>
-        <% }) %>
+<div class="d-flex">
+
+
+
+    <div class="issues">
+        <% issues.forEach(issue=> { %>
+            <div class="issue issue-open-<%= issue.open %> severity<%= issue.severity %>">
+                <h3 class="issue-title ">
+                    <a href="/issues/<%= issue._id %>">
+                        <%= issue.title %>
+                    </a>
+                </h3>
+                <p class="issue-department">
+                    <%= issue.department %> | Open: <%= issue.open %> | Assigned to: <%= issue.assigned %>
+                </p>
+                <p class="issue-date">
+                    <%= issue.date.toString().substring(0, 21) %> Priority:<% if (issue.severity==0) { %> non-issue
+                            <% } if (issue.severity==1) { %> low
+                                <% } if (issue.severity==2) { %> medium
+                                    <% } if (issue.severity==3) { %> critical <% } %>
+                </p>
+                <p class="issue-content">
+                    <%= issue.content %>
+                </p>
+
+
+            </div>
+
+            <% }) %>
+
+    </div>
+
 </div>

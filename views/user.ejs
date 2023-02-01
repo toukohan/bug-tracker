@@ -101,14 +101,15 @@
                                 </p>
                                 <% if(user.role=="admin" ) { %>
                                     <form action="/users/<%= foundUser._id %>/role" method="post">
-
-                                        <select name="role" id="role">
-                                            <option value="regular">Regular</option>
-                                            <option value="developer">Developer</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                        <button type="submit">Change role</button>
+                                        <div class="d-flex justify-content-between">
+                                            <select class="form-select" name="role" id="role">
+                                                <option value="regular">Regular</option>
+                                                <option value="developer">Developer</option>
+                                                <option value="manager">Manager</option>
+                                                <option value="admin">Admin</option>
+                                            </select>
+                                            <button class="btn d-block btn-dark mx-3" type="submit">Change</button>
+                                        </div>
                                     </form>
                                     <% } %>
                             </div>
@@ -120,8 +121,8 @@
                                             <li>
                                                 <%= department %>
                                                     <% if (user.role==="admin" ) { %>
-                                                        <button type="submit" name="department"
-                                                            value="<%= department%>">x</button>
+                                                        <button class="btn btn-danger btn-sm" type="submit"
+                                                            name="department" value="<%= department%>">x</button>
                                                         <% } %>
                                             </li>
                                             <% }) %>
@@ -130,26 +131,31 @@
 
                                 <% if(user.role==="admin" || user.role==="manager" ){ %>
                                     <form action="/users/<%= foundUser._id %>/add-department" method="post">
-                                        <select name="department" id="department">
-                                            <% departments.forEach(dep=> { %>
-                                                <option value="<%= dep %>">
-                                                    <%= dep %>
-                                                </option>
-                                                <% }) %>
-                                        </select>
-                                        <button type="submit">Add department</button>
+                                        <div class="d-flex mb-3 justify-content-between">
+                                            <select class="form-select" name="department" id="department">
+                                                <% departments.forEach(dep=> { %>
+                                                    <option value="<%= dep %>">
+                                                        <%= dep %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                            <button class="btn btn-dark d-block mx-3" type="submit">Add</button>
+                                        </div>
                                     </form>
                                     <% } %>
-                                        <% if(user.role==="admin" || user.role==="manager" ) { %>
+                                        <% if( user.teams==="ready" ) { %>
+
                                             <form action="/users/<%= foundUser._id %>/add-team" method="post">
-                                                <select name="team" id="team">
-                                                    <% user.teams.forEach(team=> { %>
-                                                        <option value="<%= team %>">
-                                                            <%= team %>
-                                                        </option>
-                                                        <% }) %>
-                                                </select>
-                                                <button type="submit">Add to team</button>
+                                                <div class="d-flex mb-3 justify-content-between">
+                                                    <select class="form-select" name="team" id="team">
+                                                        <% user.teams.forEach(team=> { %>
+                                                            <option value="<%= team %>">
+                                                                <%= team %>
+                                                            </option>
+                                                            <% }) %>
+                                                    </select>
+                                                    <button class="btn btn-dark d-block mx-3" type="submit">Add</button>
+                                                </div>
                                             </form>
                                             <% } %>
                             </div>

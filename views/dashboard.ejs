@@ -89,14 +89,28 @@
             <div class="issues">
               <h2 class="issues-title">Created by</h2>
               <% issues.forEach(issue=> { %>
-                <div class="issue issue-open-<%= issue.open %>">
-                  <h3 class="issue-title severity<%= issue.severity %>">
+                <div class="issue issue-open-<%= issue.open %> severity<%= issue.severity %>">
+                  <h3 class="issue-title">
                     <a href="/issues/<%= issue._id %>">
                       <%= issue.title %>
                     </a>
                   </h3>
                   <p class="issue-department">
-                    <%= issue.department %> | Open: <%= issue.open %> | Assigned to: <%= issue.assigned %>
+                    <%= issue.department %> | Open: <%= issue.open %> | Assigned to: <% if(!issue.assigned &&
+                          (user.role=="admin" || user.role=="manager" )) { %>
+                          <form action="/dashboard/<%= issue._id %>/assign" method="post">
+                            <select name="assign" id="assign">
+                              <% user.team.forEach(member=> { %>
+                                <option value="<%= member %>">
+                                  <%= member %>
+                                </option>
+                                <% }) %>
+                            </select>
+                            <button class="btn btn-dark btn-sm" type="submit">Assign</button>
+                          </form>
+                          <% } else { %>
+                            <%= issue.assigned %>
+                              <% } %>
                   </p>
                   <p class="issue-date">
                     <%= issue.date.toString().substring(0, 21) %>
@@ -109,11 +123,11 @@
             </div>
 
 
-            <div class="issues">
+            <div class="issues ">
               <h2 class="issues-title">Assigned to</h2>
               <% assigned.forEach(issue=> { %>
-                <div class="issue issue-open-<%= issue.open %>">
-                  <h3 class="issue-title severity<%= issue.severity %>">
+                <div class="issue issue-open-<%= issue.open %> severity<%= issue.severity %>">
+                  <h3 class="issue-title ">
                     <a href="/issues/<%= issue._id %>">
                       <%= issue.title %>
                     </a>
