@@ -12,11 +12,10 @@ const pjson = require("../package.json");
 
 router.get("/", checkAuthenticated(), async (req, res) => {
   const { _id, email } = req.user;
-
+  // the creator query
+  // { $and: [{ creator: _id }, { open: true }, { assigned: { $ne: email } }],}
   const assigned = await Issue.find({ assigned: email });
-  Issue.find({
-    $and: [{ creator: _id }, { open: true }, { assigned: { $ne: email } }],
-  })
+  Issue.find({department: "Help"})
     .sort({ date: -1 })
     .then((issues) => {
       res.render("dashboard", {

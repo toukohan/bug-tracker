@@ -30,7 +30,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <% if(user.role=="admin" ) { %>
+                            <% if(user.role=="admin" || user.role =="manager" ) { %>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/users">
                                         Users
@@ -59,9 +59,7 @@
                                                     </li>
                         </ul>
 
-                        <div class="logged-in">
-                            Logged in as <%= user.name %>
-                        </div>
+                        <%- include("./partials/logged-in") %>
                     </div>
                 </nav>
 
@@ -85,24 +83,29 @@
                             <br>
                             <input class="form-control" type="text" name="title" id="title">
 
+                            <div class="labels">
+                                    <label for="department">Department:</label>
 
+                                    <label class="second-label" for="severity">Priority:</label>
+
+                            </div>
                             <div class="select-menus d-flex">
-
+                                
                                 <select class="form-select" type="text" name="department" id="department">
-                                    <option selected>Choose department</option>
+                                    <option selected>Support</option>
                                     <% user.department.forEach(dep=> { %>
                                         <option value="<%= dep %>">
                                             <%= dep %>
                                         </option>
                                         <% }) %>
                                 </select>
-                                <% if (user.role !="regular" ) { %>
+                                <% if (user.role !="client" ) { %>
+                                    
                                     <select class="form-select" name="severity" id="severity">
-                                        <option selected>Priority</option>
-                                        <option value="0">Non-issue</option>
                                         <option value="1">Low</option>
                                         <option value="2">Medium</option>
                                         <option value="3">Critical</option>
+                                        <option value="0">Non-issue</option>
                                     </select>
                                     <% } %>
                             </div>

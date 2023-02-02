@@ -1,0 +1,14 @@
+<% if(!issue.assigned && (user.role=="admin" || user.role=="manager" )) { %>
+                          <form action="/dashboard/<%= issue._id %>/assign" method="post">
+                            <select class="form-select" name="assign" id="assign">
+                              <% user.team.forEach(member=> { %>
+                                <option value="<%= member %>">
+                                  <%= member %>
+                                </option>
+                                <% }) %>
+                            </select>
+                            <button class="btn btn-dark btn-sm" type="submit">Assign</button>
+                          </form>
+                          <% } else { %>
+                            <%= issue.assigned %>
+                              <% } %>

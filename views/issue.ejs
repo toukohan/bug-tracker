@@ -31,7 +31,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <% if(user.role=="admin" ) { %>
+                            <% if(user.role=="admin" || user.role =="manager" ) { %>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/users">
                                         Users
@@ -61,9 +61,7 @@
                                                     </li>
                         </ul>
 
-                        <div class="logged-in">
-                            Logged in as <%= user.name %>
-                        </div>
+                        <%- include("./partials/logged-in") %>
                     </div>
                 </nav>
 
@@ -109,11 +107,19 @@
                                 </p>
                                 <% if(user.role=="admin" || user.role=="manager" ) { %>
                                     <form action="/issues/<%= issue._id %>/assign" method="post">
-                                        <label for="assign">Assign as task</label>
-                                        <input type="text" id="assign" name="assign">
-                                        <button class="btn btn-sm btn-dark" type="submit">Assign</button>
+                                        <div class="d-flex justify-content-between">
+                                      <select class="form-select" name="assign" id="assign">
+                                        <% user.team.forEach(member=> { %>
+                                          <option value="<%= member %>">
+                                            <%= member %>
+                                          </option>
+                                          <% }) %>
+                                      </select>
+                                      <button class="btn btn-dark btn-sm" type="submit">Assign</button>
+                                    </div>
                                     </form>
                                     <% } %>
+                               
                             </div>
                             <% if (issue.responses.length) { %>
                                 <h3 class="m-left-30">Responses</h3>

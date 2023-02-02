@@ -24,27 +24,21 @@ router.get("/", checkAuthenticated(), (req, res) => {
 router.get("/:user", checkAuthenticated(), async (req, res) => {
   const userId = req.params.user;
   console.log(userId);
-  let deps = await Issue.find({})
-    .distinct("department")
-    .then((departments) => {
-      return departments;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  User.findById(userId)
-    .then((foundUser) => {
-      console.log(foundUser);
-      res.render("user", {
-        user: req.user,
-        foundUser: foundUser,
-        departments: deps,
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/dashboard");
-    });
+  try {
+  const foundUser = await User.findById(userId);
+  const issues = await Issue.find({assigned: foundUser.email });
+  let deps = await Issue.find({}).distinct("department");
+  res.render("user", {
+    user: req.user,
+    foundUser: foundUser,
+    departments: deps,
+    issues: issues,
+  });
+  }
+  catch(err) {
+    console.error(err);
+    res.redirect("/users");
+  }
 });
 
 router.post("/create", checkAuthenticated(), async (req, res) => {
@@ -80,6 +74,24 @@ router.post("/:userid/role", checkAuthenticated(), (req, res) => {
       console.error(err);
       res.redirect("/users/" + userid);
     });
+});
+
+router.post("/:userid/toggle-team", checkAuthenticated(), async (req, res) => {
+  const { userid } = req.params;
+  const { _id } = req.user;
+  const { toggle } = req.body;
+  try {
+    const user = await User.findById(userid);
+  let query;
+  if(toggle === "add") query = {$push: {team: user.email}};
+  if(toggle === "remove") query = {$pull: {team: user.email}}
+    await User.findByIdAndUpdate(_id, query);
+    res.redirect("/users/" + userid);
+  }
+  catch(err) {
+    console.error(err);
+    res.redirect("/users/" + userid);
+  }
 });
 
 router.post("/:userid/add-department", checkAuthenticated(), (req, res) => {

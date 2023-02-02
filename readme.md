@@ -4,7 +4,22 @@ A simple issue tracking tool to manage attention and workload depending on user 
 
 # Current version
 
-## (1.04)
+## 1.05
+
+Styling changes.
+
+Ability (for managers and admins) to add people to their team 
+
+Settings page from bottom left by clicking the username link (just to remove people from team at the moment)
+
+Dashboard populates Help -department issues and issues assigned to the (at the moment)
+
+Changed colors for the demo user login buttons
+
+Assigning dropdown menu populated with the people from your team.
+
+
+(1.04)
 
 Added dotenv. Changed to Atlas database.
 

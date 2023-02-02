@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 
 const Issue = new Schema({
   date: Date,
-  creator: String,
+  creator: {
+    id: String,
+    name: String,
+    email: String,
+  },
   title: String,
   content: String,
   version: Number,

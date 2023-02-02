@@ -31,7 +31,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <% if(user.role=="admin" ) { %>
+                            <% if(user.role=="admin" || user.role =="manager" ) { %>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/users">
                                         Users
@@ -60,9 +60,7 @@
                                                     </li>
                         </ul>
 
-                        <div class="logged-in">
-                            Logged in as <%= user.name %>
-                        </div>
+                        <%- include("./partials/logged-in") %>
                     </div>
                 </nav>
 

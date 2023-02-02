@@ -1,9 +1,37 @@
 const mongoose = require("mongoose");
-const User = require("./User");
 const Schema = mongoose.Schema;
 
-const Team = new Schema({
-  members: [User],
+const MemberSchema = new Schema({
+  name: String,
+  email: {
+    type: String,
+    
+  },
+  email_verified: {
+    type: Boolean,
+    default: false,
+  },
+  role: {
+    type: String,
+    default: "developer",
+  },
+  projects: [String],
 });
 
-module.exports = mongoose.model("Team", Team);
+const TeamSchema = new Schema({
+  name: {
+    type: String,
+    unique: true,
+  },
+  members: [MemberSchema],
+  admins: [MemberSchema],
+  projects: [String],
+});
+
+
+
+module.exports = {
+
+ Team: mongoose.model("Team", TeamSchema),
+ Member: mongoose.model("Member", MemberSchema),
+}

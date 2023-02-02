@@ -121,13 +121,17 @@ body {
   border: 2px solid #fff;
 }
 .severity1 {
-  border: 2px solid lightgoldenrodyellow;
-}
-.severity2 {
+  background-color: lightgoldenrodyellow;
   border: 2px solid peachpuff;
 }
-.severity3 {
+.severity2 {
+  background-color: peachpuff;
   border: 2px solid lightsalmon;
+}
+.severity3 {
+  
+  background-color: lightsalmon;
+  border: 2px solid tomato;
 }
 
 .user {
@@ -169,6 +173,7 @@ body {
   margin-top: auto;
   margin-left: 15px;
   margin-bottom: 20px;
+  line-height: 0.5;
 }
 
 .found-user {
@@ -206,4 +211,8 @@ body {
   margin-top: 10px;
   padding: 30px 45px;
   
+}
+
+.second-label {
+  margin-left: 125px;
 }

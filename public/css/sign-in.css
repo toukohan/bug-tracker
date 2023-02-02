@@ -51,3 +51,19 @@ body {
 .success {
   background-color: green;
 }
+.btn-success {
+  background-color: tomato;
+  border-color: tomato;
+}
+.btn-success:hover {
+  background-color: hsl(9, 70%, 64%);
+  border-color: hsl(9, 70%, 64%);
+}
+.btn-primary {
+  background-color: lightsalmon;
+  border-color: lightsalmon;
+}
+.btn-primary:hover {
+  background-color: hsl(17, 70%, 74%);
+  border-color: hsl(17, 70%, 74%);
+}

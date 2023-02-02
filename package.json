@@ -1,6 +1,6 @@
 {
   "name": "bug-tracker",
-  "version": "1.04",
+  "version": "1.05",
   "description": "A simple issue tracking tool to manage attention and workload depending on user roles.",
   "main": "app.js",
   "scripts": {

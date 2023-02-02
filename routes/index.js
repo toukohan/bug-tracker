@@ -58,9 +58,9 @@ router.post("/demo-login", (req, res, next) => {
     req.body.email = "dev@dev";
     req.body.password = "dev";
   }
-  if (role == "regular") {
-    req.body.email = "regular@regular";
-    req.body.password = "regular";
+  if (role == "client") {
+    req.body.email = "client@client";
+    req.body.password = "client";
   }
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
@@ -93,7 +93,7 @@ router.post("/register", (req, res) => {
       name,
       email,
       password: hash,
-      role: "regular",
+      role: "admin",
       email_verified: false,
     });
     newUser.save((err) => {
@@ -176,7 +176,11 @@ router.post("/create", checkAuthenticated(), (req, res) => {
   const { title, content, department, severity } = req.body;
 
   const newIssue = new Issue({
-    creator: req.user.id,
+    creator: {
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+    },
     date: new Date(),
     title: title,
     content: content,
@@ -194,6 +198,22 @@ router.post("/create", checkAuthenticated(), (req, res) => {
     res.redirect("/dashboard");
   });
 });
+
+router.get("/settings/:userid", checkAuthenticated(), (req, res) => {
+  res.render("settings", {user: req.user});
+});
+
+router.post("/settings/:userid/remove-member", checkAuthenticated(), (req, res) => {
+  const { userid } = req.params;
+  const { member } = req.body;
+  User.findByIdAndUpdate(userid, {$pull: {team: member }}, (err) => {
+    if(err) {
+      console.error(err);
+      res.redirect("/settings/"+ userid);
+    }
+    res.redirect("/settings/"+ userid);
+  })
+})
 
 router.get("/team", checkAuthenticated(), (req, res) => {
   console.log(req.user.team);

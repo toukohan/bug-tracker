@@ -42,6 +42,7 @@ app.use("/", require("./routes/index"));
 app.use("/dashboard", require("./routes/dashboard"));
 app.use("/issues", require("./routes/issues"));
 app.use("/users", require("./routes/users"));
+app.use("/teams", require("./routes/teams"));
 
 app.use("/demo", require("./routes/demo"));
 

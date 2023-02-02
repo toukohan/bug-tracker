@@ -30,7 +30,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <% if(user.role=="admin" ) { %>
+                            <% if(user.role=="admin" || user.role =="manager" ) { %>
                                 <li class="nav-item">
                                     <a class="nav-link active" href="/users">
                                         Users
@@ -59,9 +59,7 @@
                                                     </li>
                         </ul>
 
-                        <div class="logged-in">
-                            Logged in as <%= user.name %>
-                        </div>
+                        <%- include("./partials/logged-in") %>
                     </div>
                 </nav>
 
@@ -110,7 +108,7 @@
                                         <input class="form-control w-300" type="password" name="password" id="password">
                                         <label for="role">Role:</label>
                                         <select class="form-select w-300" name="role" id="role">
-                                            <option value="regular">regular</option>
+                                            <option value="client">client</option>
                                             <option value="developer">developer</option>
                                             <option value="manager">manager</option>
                                             <option value="admin">admin</option>
