@@ -6,6 +6,10 @@ A simple issue tracking tool to manage attention and workload depending on user 
 
 ## 1.05
 
+Added set priority to issue.
+
+(1.05)
+
 Styling changes.
 
 Ability (for managers and admins) to add people to their team 

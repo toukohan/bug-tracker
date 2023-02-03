@@ -116,6 +116,20 @@ router.post("/:issue/handle", checkAuthenticated(), (req, res) => {
   }
 });
 
+router.post("/:issue/priority", checkAuthenticated(), (req, res) => {
+  const {priority} = req.body;
+  const {issue: issueid} = req.params;
+  let query;
+  if(priority == "none") query = 0;
+  if(priority == "low") query = 1;
+  if(priority == "medium") query = 2;
+  if(priority == "high") query = 3;
+  Issue.findByIdAndUpdate(issueid, {$set: {severity: query }}, (err) => {
+    if(err) console.error(err);
+    console.log("priority changed to", query);
+    res.redirect("/issues/" + issueid);
+  })
+});
 router.post("/:issue/response", checkAuthenticated(), (req, res) => {
   const { issue: issueId } = req.params;
   const { content } = req.body;

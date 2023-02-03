@@ -115,6 +115,9 @@ body {
   opacity: 0.5;
 }
 
+.issue-bold {
+  font-weight: bold;
+}
 /* colors for the issue based on severity/priority */
 
 .severity0 {

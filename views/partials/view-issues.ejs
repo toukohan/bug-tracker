@@ -11,15 +11,16 @@
                     <p class="issue-date">
                         <%= issue.date.toString().substring(0, 21) %> 
                         
-                        <p class="issue-priority">Priority:<% if (issue.severity==0) { %> non-issue
+                        <p class="issue-bold">Priority:<% if (issue.severity==0) { %> non-issue
                             <% } if (issue.severity==1) { %> low
                                 <% } if (issue.severity==2) { %> medium
                                     <% } if (issue.severity==3) { %> critical <% } %>
                                 </p>
+                                
                             </div>
                             
                             <div class="d-flex justify-content-between">
-                    <p class="issue-department"><strong><%= issue.department %></strong></p>  <p class="issue-status"><strong>Status:</strong> <% if (issue.open) { %> <strong>Open</strong> <% } else { %> <strong>Closed</strong> <% } %> </p>
+                    <p class="issue-bold"><%= issue.department %></p>  <p class="issue-bold">Status: <% if (issue.open) { %> Open <% } else { %> Closed <% } %> </p>
                 </div>
 
                     <% if(!issue.assigned && (user.role=="admin" || user.role=="manager" )) { %>

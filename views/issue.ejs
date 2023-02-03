@@ -80,31 +80,74 @@
                                 <h3 class="issue-title ">
                                     <%= issue.title %>
                                 </h3>
-                                <p class="issue-department">
-                                    <%= issue.department %> | <% if(issue.open) { %> Open <% } else { %> Closed <% } %>
-                                                    |
-                                                    Assigned to: <%= issue.assigned %>
-                                                        <% if(user.role=="admin" || user.role=="manager" ) { %>
-                                                            <form action="/issues/<%= issue._id %>/handle"
-                                                                method="post">
-                                                                <% if (issue.open) { %>
-                                                                    <button class="btn btn-sm btn-dark" type="submit"
-                                                                        name="handle" value="close">Close</button>
-                                                                    <% } else { %>
-                                                                        <button class="btn btn-sm btn-dark"
-                                                                            type="submit" name="handle"
-                                                                            value="open">Open</button>
-                                                                        <% } %>
-                                                            </form>
-                                                            <% } %>
-                                </p>
+                                <div class="d-flex justify-content-between">
 
-                                <p class="issue-date">
-                                    <%= issue.date.toString().substring(0, 21) %>
+                                    <p class="issue-date"> 
+                                        <%= issue.date.toString().substring(0, 21) %>
+                                    </p>
+                                    <p class="issue-bold">Priority:<% if (issue.severity==0) { %> non-issue
+                                        <% } if (issue.severity==1) { %> low
+                                            <% } if (issue.severity==2) { %> medium
+                                                <% } if (issue.severity==3) { %> critical <% } %>
+                                            </p>
+                                        
+                                </div>
+                                <div class="d-flex justify-content-between">
+
+                                    <p class="issue-bold">
+                                        <%= issue.department %> </p> 
+                                        <p class="issue-bold">Status: <% if(issue.open) { %> Open <% } else { %> Closed <% } %></p>
+                                          
+                                        <% if(user.role=="admin" || user.role=="manager" ) { %>
+                                            <form action="/issues/<%= issue._id %>/handle"
+                                                method="post">
+                                                <% if (issue.open) { %>
+                                                    <button class="btn btn-sm btn-dark" type="submit"
+                                                        name="handle" value="close">Close Issue</button>
+                                                    <% } else { %>
+                                                        <button class="btn btn-sm btn-dark"
+                                                            type="submit" name="handle"
+                                                            value="open">Open Issue</button>
+                                                        <% } %>
+                                            </form>
+                                            <% } %>
+                                        
+                                    </div>
+                                    
+                                                    
+                                     
+                                                       
                                 </p>
+                                
                                 <p class="issue-content">
                                     <%= issue.content %>
                                 </p>
+                                        
+                                
+                                <% if (user.role == "admin" || user.role == "manager") { %> 
+                                    <hr>  
+
+                                        <form action="/issues/<%= issue._id %>/priority" method="post">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            
+                                            <label for="priority">Priority:
+
+
+                                            </label>
+                                        <select name="priority" id="priority" class="form-select">
+                                            <option value="none">none</option>
+                                            <option value="low">low</option>
+                                            <option value="medium">medium</option>
+                                            <option value="high">high</option>
+                                        </select>
+                                        <button class="btn btn-dark btn-sm" type="submit">Set</button>
+                                    </div>
+                                    </form>
+                                    <hr>
+                                    <% } %>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    <p class="issue-bold"><% if (!issue.assigned) { %> Unassigned <% } else { %> <%= issue.assigned %> <% } %></p>
+
                                 <% if(user.role=="admin" || user.role=="manager" ) { %>
                                     <form action="/issues/<%= issue._id %>/assign" method="post">
                                         <div class="d-flex justify-content-between">
@@ -119,7 +162,8 @@
                                     </div>
                                     </form>
                                     <% } %>
-                               
+                                </div>
+
                             </div>
                             <% if (issue.responses.length) { %>
                                 <h3 class="m-left-30">Responses</h3>
