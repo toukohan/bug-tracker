@@ -15,7 +15,7 @@ router.get("/", checkAuthenticated(), async (req, res) => {
   // the creator query
   // { $and: [{ creator: _id }, { open: true }, { assigned: { $ne: email } }],}
   const assigned = await Issue.find({ assigned: email });
-  Issue.find({department: "Help"})
+  Issue.find({ department: "Help" })
     .sort({ date: -1 })
     .then((issues) => {
       res.render("dashboard", {
@@ -38,7 +38,11 @@ router.post("/", checkAuthenticated(), async (req, res) => {
   const { sortby } = req.body;
   let sort = {};
   let query = {
-    $and: [{ open: true }, { creator: _id }, { assigned: { $ne: email } }],
+    $and: [
+      { open: true },
+      { department: "Help" },
+      { assigned: { $ne: email } },
+    ],
   };
   if (sortby == "new") sort.date = -1;
   if (sortby == "priority") sort.severity = -1;

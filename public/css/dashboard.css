@@ -97,7 +97,8 @@ body {
 .issue {
   width: 400px;
   padding: 10px 20px;
-  margin: 10px;
+  margin-bottom: 10px;
+  margin-right: 30px;
   border: 2px solid gainsboro;
   border-radius: 5px;
 }
@@ -111,6 +112,9 @@ body {
   padding-left: 35px;
 }
 
+.issues a {
+  color: #2470dc;
+}
 .issue-open-false {
   opacity: 0.5;
 }
@@ -121,30 +125,32 @@ body {
 /* colors for the issue based on severity/priority */
 
 .severity0 {
-  border: 2px solid #fff;
+  
+  border: 2px solid hsl(30, 21%, 95%);
 }
 .severity1 {
-  background-color: lightgoldenrodyellow;
-  border: 2px solid peachpuff;
+  background-color: hsl(28, 100%, 95%);
+  border: 2px solid hsl(27, 81%, 87%);
 }
 .severity2 {
   background-color: peachpuff;
-  border: 2px solid lightsalmon;
+  border: 2px solid rgb(250, 166, 132);
 }
 .severity3 {
   
-  background-color: lightsalmon;
-  border: 2px solid tomato;
+  background-color: rgb(253, 166, 131);
+  border: 2px solid rgb(250, 134, 113);
 }
 
 .user {
   padding: 10px;
   width: 400px;
-  border: 1px solid gainsboro;
+  border: 2px solid gainsboro;
+  border-radius: 5px;
 }
 
 .issue a {
-  color: black;
+  color: #2470dc;
 }
 
 .user-props {

@@ -36,6 +36,7 @@ router.post("/", checkAuthenticated(), (req, res) => {
   let sort;
   let query = { open: true, department: { $in: departments } };
   if (sortby == "new") sort = { date: -1 };
+  if (sortby == "help") query.department = "Help";
   if (sortby == "priority") sort = { severity: -1 };
   if (sortby == "closed") {
     sort = { open: -1, date: -1 };
@@ -117,18 +118,18 @@ router.post("/:issue/handle", checkAuthenticated(), (req, res) => {
 });
 
 router.post("/:issue/priority", checkAuthenticated(), (req, res) => {
-  const {priority} = req.body;
-  const {issue: issueid} = req.params;
+  const { priority } = req.body;
+  const { issue: issueid } = req.params;
   let query;
-  if(priority == "none") query = 0;
-  if(priority == "low") query = 1;
-  if(priority == "medium") query = 2;
-  if(priority == "high") query = 3;
-  Issue.findByIdAndUpdate(issueid, {$set: {severity: query }}, (err) => {
-    if(err) console.error(err);
+  if (priority == "none") query = 0;
+  if (priority == "low") query = 1;
+  if (priority == "medium") query = 2;
+  if (priority == "high") query = 3;
+  Issue.findByIdAndUpdate(issueid, { $set: { severity: query } }, (err) => {
+    if (err) console.error(err);
     console.log("priority changed to", query);
     res.redirect("/issues/" + issueid);
-  })
+  });
 });
 router.post("/:issue/response", checkAuthenticated(), (req, res) => {
   const { issue: issueId } = req.params;

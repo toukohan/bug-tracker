@@ -31,7 +31,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <% if(user.role=="admin" || user.role =="manager" ) { %>
+                            <% if(user.role=="admin" || user.role=="manager" ) { %>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/users">
                                         Users
@@ -81,7 +81,8 @@
                                     value="unassigned">unassigned</button>
                                 <button class="btn btn-dark btn-sm" name="sortby" type="submit"
                                     value="closed">closed</button>
-
+                                <button class="btn btn-dark btn-sm" name="sortby" type="submit"
+                                    value="help">help</button>
 
                             </form>
                         </div>

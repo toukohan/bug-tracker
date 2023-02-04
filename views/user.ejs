@@ -32,7 +32,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <% if(user.role=="admin" || user.role =="manager" ) { %>
+                            <% if(user.role=="admin" || user.role=="manager" ) { %>
                                 <li class="nav-item">
                                     <a class="nav-link " href="/users">
                                         Users
@@ -83,29 +83,29 @@
 
                     <div class="d-flex">
 
-                    
+
                         <div class="user">
                             Name:
-                            <div class="user-props text-center">
-                                
+                            <div class="user-props px-2">
+
                                 <h4 class="user-name">
-                                     <%= foundUser.name %>
+                                    <%= foundUser.name %>
                                 </h4>
                             </div>
                             Email:
-                            <div class="user-props text-center">
+                            <div class="user-props px-2">
                                 <h4 class="user-email">
-                                     <%= foundUser.email %>
+                                    <%= foundUser.email %>
                                 </h4>
                             </div>
                             Role:
-                            <div class="user-props text-center">
+                            <div class="user-props px-2">
                                 <h4 class="user-role">
-                                     <%= foundUser.role %>
+                                    <%= foundUser.role %>
                                 </h4>
                                 <% if(user.role=="admin" ) { %>
                                     <form action="/users/<%= foundUser._id %>/role" method="post">
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <select class="form-select" name="role" id="role">
                                                 <option value="client">Client</option>
                                                 <option value="developer">Developer</option>
@@ -119,24 +119,26 @@
                             </div>
                             Departments:
                             <div class="user-props">
-                                
+
                                 <form action="/users/<%= foundUser._id %>/remove-department" method="post">
-                                    <ul class="user-departments">
-                                        <% foundUser.department.forEach(department=> { %>
-                                            <li>
+
+                                    <% foundUser.department.forEach(department=> { %>
+                                        <p class="d-flex justify-content-between align-items-center p-2">
+                                            <strong>
                                                 <%= department %>
-                                                    <% if (user.role==="admin" ) { %>
-                                                        <button class="btn btn-danger btn-sm" type="submit"
-                                                            name="department" value="<%= department%>">x</button>
-                                                        <% } %>
-                                            </li>
-                                            <% }) %>
-                                    </ul>
+                                            </strong>
+                                            <% if (user.role==="admin" ) { %>
+                                                <button class="btn btn-outline-danger btn-sm" type="submit"
+                                                    name="department" value="<%= department%>">x</button>
+                                                <% } %>
+                                                    </li>
+                                                    <% }) %>
+
                                 </form>
 
                                 <% if(user.role==="admin" || user.role==="manager" ){ %>
                                     <form action="/users/<%= foundUser._id %>/add-department" method="post">
-                                        <div class="d-flex mb-3 justify-content-between">
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <select class="form-select" name="department" id="department">
                                                 <% departments.forEach(dep=> { %>
                                                     <option value="<%= dep %>">
@@ -148,7 +150,7 @@
                                         </div>
                                     </form>
                                     <% } %>
-                                    
+
 
 
                                         <% if( user.teams==="ready" ) { %>
@@ -168,26 +170,28 @@
                                             <% } %>
                             </div>
                             <% if(!user.team.includes(foundUser.email)) { %>
-                            Add to my team:
-                                    <div class="add-to-my-team user-props ">
-                                        <form action="/users/<%= foundUser._id %>/toggle-team" method="post">
-                                            <button class="btn btn-dark" type="submit" name="toggle" value="add">Add to my team</button>
-                                        </form>
-                                    </div>
-                            <% } else { %>
-                                User is in my team:
+                                Add to my team:
                                 <div class="add-to-my-team user-props ">
                                     <form action="/users/<%= foundUser._id %>/toggle-team" method="post">
-                                        <button class="btn btn-dark" type="submit" name="toggle" value="remove">Remove from my team</button>
+                                        <button class="btn btn-dark" type="submit" name="toggle" value="add">Add to my
+                                            team</button>
                                     </form>
                                 </div>
-                                <% } %>
+                                <% } else { %>
+                                    User is in my team:
+                                    <div class="add-to-my-team user-props ">
+                                        <form action="/users/<%= foundUser._id %>/toggle-team" method="post">
+                                            <button class="btn btn-dark" type="submit" name="toggle"
+                                                value="remove">Remove from my team</button>
+                                        </form>
+                                    </div>
+                                    <% } %>
                         </div>
 
-                    
 
-                    <%- include("./partials/view-issues") %>
-                </div>
+
+                        <%- include("./partials/view-issues") %>
+                    </div>
 
                 </main>
             </div>

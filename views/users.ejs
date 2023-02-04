@@ -30,7 +30,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <% if(user.role=="admin" || user.role =="manager" ) { %>
+                            <% if(user.role=="admin" || user.role=="manager" ) { %>
                                 <li class="nav-item">
                                     <a class="nav-link active" href="/users">
                                         Users
@@ -77,11 +77,20 @@
                         <div class="issues">
                             <% users.forEach(user=> { %>
                                 <div class="issue">
-                                    <p class="user-name">
-                                        Name: <a href="/users/<%= user._id %>">
-                                            <%= user.name %>
-                                        </a> | Role: <%= user.role %>
-                                    </p>
+                                    <div class="d-flex justify-content-between">
+
+                                        <p class="user-name">
+                                            Name: <a href="/users/<%= user._id %>">
+                                                <strong>
+                                                    <%= user.name %>
+                                                </strong>
+                                            </a>
+                                        </p>
+                                        <p class="user-role">Role: <strong>
+                                                <%= user.role %>
+                                            </strong>
+                                        </p>
+                                    </div>
                                     <p class="user-email">
                                         Email: <%= user.email %>
                                     </p>

@@ -4,7 +4,13 @@ A simple issue tracking tool to manage attention and workload depending on user 
 
 # Current version
 
-## 1.05
+## 1.06
+
+Improved styles: added link color to issues and users, lined up texts and buttons in issue view.
+
+Made the issue views display similar on the dashboard.
+
+(1.05)
 
 Added set priority to issue.
 
@@ -12,7 +18,7 @@ Added set priority to issue.
 
 Styling changes.
 
-Ability (for managers and admins) to add people to their team 
+Ability (for managers and admins) to add people to their team
 
 Settings page from bottom left by clicking the username link (just to remove people from team at the moment)
 
@@ -21,7 +27,6 @@ Dashboard populates Help -department issues and issues assigned to the (at the m
 Changed colors for the demo user login buttons
 
 Assigning dropdown menu populated with the people from your team.
-
 
 (1.04)
 

@@ -1,53 +1,58 @@
-    <div class="issues">
-        <% issues.forEach(issue=> { %>
-            <div class="issue issue-open-<%= issue.open %> severity<%= issue.severity %>">
-                <h3 class="issue-title ">
-                    <a href="/issues/<%= issue._id %>">
-                        <%= issue.title %>
-                    </a>
-                </h3>
-                <div class="d-flex justify-content-between">
+<div class="issues">
+    <% issues.forEach(issue=> { %>
+        <div class="issue issue-open-<%= issue.open %> severity<%= issue.severity %>">
+            <h3 class="issue-title ">
+                <a href="/issues/<%= issue._id %>">
+                    <%= issue.title %>
+                </a>
+            </h3>
+            <div class="d-flex justify-content-between">
 
-                    <p class="issue-date">
-                        <%= issue.date.toString().substring(0, 21) %> 
-                        
+                <p class="issue-date">
+                    <%= issue.date.toString().substring(0, 21) %>
+
                         <p class="issue-bold">Priority:<% if (issue.severity==0) { %> non-issue
-                            <% } if (issue.severity==1) { %> low
-                                <% } if (issue.severity==2) { %> medium
-                                    <% } if (issue.severity==3) { %> critical <% } %>
-                                </p>
-                                
-                            </div>
-                            
-                            <div class="d-flex justify-content-between">
-                    <p class="issue-bold"><%= issue.department %></p>  <p class="issue-bold">Status: <% if (issue.open) { %> Open <% } else { %> Closed <% } %> </p>
-                </div>
-
-                    <% if(!issue.assigned && (user.role=="admin" || user.role=="manager" )) { %>
-                        <form action="/issues/<%= issue._id %>/assign" method="post">
-                            <div class="d-flex justify-content-between">
-                          <select class="form-select" name="assign" id="assign">
-                            <% user.team.forEach(member=> { %>
-                              <option value="<%= member %>">
-                                <%= member %>
-                              </option>
-                              <% }) %>
-                          </select>
-                          <button class="btn btn-dark btn-sm" type="submit">Assign</button>
-                        </div>
-                        </form>
-                        <% } else { %>
-                          <p>Assigned to: <%= issue.assigned %></p>
-                            <% } %>
-                
-                <hr>
-                <p class="issue-content">
-                    <%= issue.content %>
-                </p>
-
+                                <% } if (issue.severity==1) { %> low
+                                    <% } if (issue.severity==2) { %> medium
+                                        <% } if (issue.severity==3) { %> critical <% } %>
+                        </p>
 
             </div>
 
-            <% }) %>
+            <div class="d-flex justify-content-between">
+                <p class="issue-bold">
+                    <%= issue.department %>
+                </p>
+                <p class="issue-bold">Status: <% if (issue.open) { %> Open <% } else { %> Closed <% } %>
+                </p>
+            </div>
 
-    </div>
+            <% if(!issue.assigned && issue.open && (user.role=="admin" || user.role=="manager" )) { %>
+                <form action="/issues/<%= issue._id %>/assign" method="post">
+                    <div class="d-flex justify-content-between">
+                        <select class="form-select" name="assign" id="assign">
+                            <% user.team.forEach(member=> { %>
+                                <option value="<%= member %>">
+                                    <%= member %>
+                                </option>
+                                <% }) %>
+                        </select>
+                        <button class="btn btn-dark btn-sm" type="submit">Assign</button>
+                    </div>
+                </form>
+                <% } else { %>
+                    <p>Assigned to: <%= issue.assigned %>
+                    </p>
+                    <% } %>
+
+                        <hr>
+                        <p class="issue-content">
+                            <%= issue.content %>
+                        </p>
+
+
+        </div>
+
+        <% }) %>
+
+</div>
