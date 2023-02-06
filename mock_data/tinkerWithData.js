@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const json = require("./mock_data/MOCK_DATA2.json");
+const json = require("./MOCK_DATA2.json");
 
 json.forEach((issue) => {
   let date = issue.date.$date;
@@ -8,4 +8,4 @@ json.forEach((issue) => {
   console.log(issue.date);
 });
 
-fs.writeFileSync("./mock_data/MOCK_DATA3.json", JSON.stringify(json));
+fs.writeFileSync("./MOCK_DATA3.json", JSON.stringify(json));

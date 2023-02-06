@@ -2,7 +2,7 @@ const Issue = require("./models/Issue");
 const mongoose = require("mongoose");
 const assert = require("assert");
 
-const json = require("./mock_data/MOCK_DATA3.json");
+const json = require("./MOCK_DATA3.json");
 const { db } = require("./models/User");
 
 mongoose.set("strictQuery", true);
