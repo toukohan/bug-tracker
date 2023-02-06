@@ -6,9 +6,9 @@ A simple issue tracking tool to manage attention and workload depending on user 
 
 ## 1.07
 
-Search bar for looking issue titles and contents for word.
+Added a search bar for searching issue titles and contents.
 
-Responsiveness to screen size.
+Added responsiveness to screen size.
 
 (1.06)
 
