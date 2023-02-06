@@ -4,7 +4,13 @@ A simple issue tracking tool to manage attention and workload depending on user 
 
 # Current version
 
-## 1.06
+## 1.07
+
+Search bar for looking issue titles and contents for word.
+
+Responsiveness to screen size.
+
+(1.06)
 
 Improved styles: added link color to issues and users, lined up texts and buttons in issue view.
 

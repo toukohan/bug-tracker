@@ -1,0 +1,10 @@
+<ul class="nav">
+    <% departments.forEach(dep=> { %>
+
+        <li class="nav-item"><a class="nav-link" href="/departments/<%= dep%>">
+                <%= dep %>
+            </a>
+        </li>
+
+        <% }) %>
+</ul>

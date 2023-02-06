@@ -1,6 +1,10 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand  me-0 px-3 fs-6" href="/dashboard">Bug Stalker</a>
-
+    
+      <form action="/issues/search" method="post">
+        <input class="form-control form-control-dark w-100 rounded-0 border-0" name="search" type="search" placeholder="Search" aria-label="Search" required>
+        <input type="submit" class="hidden-submit">
+      </form>
     <div class="navbar-nav">
 
         <div class="nav-item text-nowrap flex">
@@ -8,4 +12,13 @@
             <a class="nav-link px-3" href="/logout">Sign out</a>
         </div>
     </div>
+    <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 </header>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse my-4">
+            <div class="position-sticky pt-3 sidebar-sticky sidebar-custom">
+                <ul class="nav flex-column">

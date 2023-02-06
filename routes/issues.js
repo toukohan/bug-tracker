@@ -147,4 +147,19 @@ router.post("/:issue/response", checkAuthenticated(), (req, res) => {
       res.redirect("/issues/" + issueId);
     });
 });
+
+router.post("/search", checkAuthenticated(), async (req, res) => {
+  const { search } = req.body;
+  const regex = new RegExp(search, "i");
+  console.log(regex);
+  try {
+    
+    const issues = await Issue.find({$or: [{content: regex}, {title: regex}, {"creator.name": regex}]});
+    res.render("issues", {user: req.user, issues: issues, departments: req.user.department});
+  }
+  catch(err) {
+    console.error(err);
+    res.redirect("/dashboard");
+  }
+})
 module.exports = router;
