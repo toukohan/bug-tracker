@@ -82,7 +82,19 @@ I created views for issues and users from where you can select an view individua
 
 Created some mock data to play with. (But decided to start creating issues by hand instead.)
 
+# Lessons learned
+
+If I started again, I would maybe try to break the goal down to more clear ideas. Now I was building the models on the go and they were getting cumbersome to manage.
+
+I would start making the ejs partial views from the beginning. Now I found myself fixing same things on different views too many times. So maybe having a more clear idea on the views would be beneficial before starting to write the code.
+
+I got a better understanding of asynchronous code, when I was trying to figure out multiple database calls per one request.
+
 # Goals
+
+## Projects (new)
+
+At the moment all users are getting the issues from the same general source. So I was thinking about an ability to create projects that would be tied to the user who creates them. Then they would be able to invite other users to work with their project.
 
 ## Roles
 
