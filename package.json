@@ -1,5 +1,5 @@
 {
-  "name": "bug-tracker",
+  "name": "bug-stalker",
   "version": "1.07",
   "description": "A simple issue tracking tool to manage attention and workload depending on user roles.",
   "main": "app.js",
